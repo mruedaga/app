@@ -1,0 +1,42 @@
+micronaut:
+  application:
+    name: mnEasyfeedback
+  server:
+    port: 8080
+    cors:
+      enabled: true
+
+---
+micronaut:
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/**"
+        paths: "classpath:public"
+
+---
+micronaut:
+  security:
+    enabled: true
+    interceptUrlMap:
+      - pattern: "/**"
+        httpMethod: GET
+        access:
+          - isAnonymous()
+    authentication: cookie
+    oauth2:
+      enabled: true
+      clients:
+        google:
+          client-secret: ''
+          client-id: ''
+          openid:
+            issuer: https://accounts.google.com
+    redirect:
+      login-success: /user/afterlogin
+      after-login-success: http://localhost:8080/edit
+    token:
+      jwt:
+        cookie:
+          cookie-same-site: none

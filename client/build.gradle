@@ -1,0 +1,37 @@
+plugins {
+    id 'org.ysb33r.nodejs.base'  version '0.8.0'
+    id 'org.ysb33r.nodejs.npm'   version '0.8.0'
+}
+
+task clean(){
+    group 'build'
+    doFirst{
+        delete file('dist')
+    }
+}
+
+task npmInstall( type : org.ysb33r.gradle.nodejs.tasks.NpmTask ) {
+    group 'build'
+    description = 'Install dependencies'
+    command 'install'
+}
+
+task start( type : org.ysb33r.gradle.nodejs.tasks.NpmTask ) {
+    group 'build'
+    description = 'Run the client app'
+    command 'run'
+    cmdArgs 'serve'
+}
+
+task stop( type: Exec){
+    group 'build'
+    description = 'Stop the client app'
+    commandLine 'killall' , 'node'
+}
+
+task build( type : org.ysb33r.gradle.nodejs.tasks.NpmTask, dependsOn: 'npmInstall' ) {
+    group 'build'
+    description = 'Build the client app'
+    command 'run'
+    cmdArgs 'build'
+}

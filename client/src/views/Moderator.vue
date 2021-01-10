@@ -1,0 +1,60 @@
+<template>
+  <div class="edit">
+    <b-container fluid>
+      <b-row>
+        <b-col lg="2" md="12" sm="12" xl="2">
+          <timer-control v-on:startTimer="startTimer" v-on:stopTimer="stopTimer" v-on:resetCounter="resetCounter"></timer-control>
+        </b-col>
+        <b-col lg="6" md="12" sm="12" xl="6">
+          <vertical-questions/>
+        </b-col>
+        <b-col lg="4" md="12" sm="12" xl="4">
+          <url-generator/>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
+</template>
+<script>
+import UrlGenerator from '@/components/UrlGenerator.vue'
+import VerticalQuestions from '@/components/VerticalQuestions.vue';
+import TimerControl from '@/components/TimerControl.vue';
+
+export default {
+  name: 'Moderator',
+  components: {
+    UrlGenerator,
+    VerticalQuestions,
+    TimerControl
+  },
+  methods: {
+    async startTimer() {
+      await this.$store.state.apiService.startEasyFeedback(this.$store.state.currentPoll.id);
+      this.interval = setInterval(() => {
+        this.updatePoll();
+      }, 1000)
+      this.updatePoll();
+    },
+    async stopTimer() {
+      await this.$store.state.apiService.stopEasyFeedback(this.$store.state.currentPoll.id);
+      this.interval.stopTimer()
+    },
+    async resetCounter() {
+      await this.$store.state.apiService.resetEasyFeedback(this.$store.state.currentPoll.id);
+      await this.updatePoll();
+    },
+    async updatePoll() {
+      let uuid = this.$store.state.currentPoll.id;
+      let response = await this.$store.state.apiService.getEasyFeedback(uuid);
+      await this.$store.commit('updateModel', response.data);
+    }
+  },
+  mounted() {
+    if (!this.$store.state.currentPoll.id) {
+      this.$router.push('/')
+      return
+    }
+  }
+}
+</script>
+

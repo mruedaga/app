@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2alpha2
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}       # use git commit policy
+  artifacts:
+    - image: registry.gitlab.com/easy-feedback/mn-easyfeedback
+      context: .
+      sync:
+        manual:
+          - src: 'src/**'
+            dest: .

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - image: registry.gitlab.com/easy-feedback/mn-easyfeedback
+          name: app
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: MICRONAUT_SECURITY_OAUTH2_CLIENTS_GOOGLE_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: google
+                  key: google_client_secret
+            - name: MICRONAUT_SECURITY_OAUTH2_CLIENTS_GOOGLE_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: google
+                  key: google_client_id
+            - name: MICRONAUT_SECURITY_REDIRECT_AFTER_LOGIN_SUCCESS
+              value: "https://easy-feedback.app/edit"
+
+      imagePullSecrets:
+        - name: gitlab-secret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+    - name: "sse"
+      port: 8080
+  selector:
+    app: app
