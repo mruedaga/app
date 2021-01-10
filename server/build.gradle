@@ -1,0 +1,72 @@
+plugins {
+    id("groovy")
+    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("io.micronaut.application") version "1.2.0"
+    id("com.google.cloud.tools.jib") version "2.6.0"
+}
+
+version = "0.1"
+group = "mn.easyfeedback"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("spock2")
+    processing {
+        incremental(true)
+        annotations("mn.easyfeedback.*")
+    }
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.groovy:micronaut-runtime-groovy")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-management")
+    runtimeOnly("ch.qos.logback:logback-classic")
+
+    implementation("org.codehaus.groovy:groovy-json:3.0.5")
+    implementation("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+}
+
+
+application {
+    mainClass.set("mn.easyfeedback.Application")
+    applicationDefaultJvmArgs = ['-Dmicronaut.environments=dev']
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+compileGroovy.groovyOptions.configurationScript = file('../gradle/config/groovyc.groovy')
+
+
+jib {
+    to {
+        image = "registry.gitlab.com/easy-feedback/mn-easyfeedback"
+    }
+}
+
+task copyClientResources(dependsOn: ':client:build') {
+    group = 'build'
+    description = 'Copy client resources into server'
+}
+copyClientResources.doFirst {
+    copy {
+        from project(':client').file('dist').absolutePath
+        into "${project.buildDir}/resources/main/public"
+    }
+}
+
+task assembleServerAndClient(dependsOn: ['copyClientResources', 'shadowJar']) {
+    group = 'build'
+    description = 'Build combined server & client JAR'
+}
