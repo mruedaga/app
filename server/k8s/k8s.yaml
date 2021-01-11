@@ -13,7 +13,7 @@ spec:
         app: app
     spec:
       containers:
-        - image: registry.gitlab.com/easy-feedback/mn-easyfeedback
+        - image: jagedn/easy-feedback
           name: app
           ports:
             - name: http
@@ -29,9 +29,6 @@ spec:
                 configMapKeyRef:
                   name: google
                   key: google_client_id
-            - name: MICRONAUT_SECURITY_REDIRECT_AFTER_LOGIN_SUCCESS
-              value: "https://easy-feedback.app/edit"
-
       imagePullSecrets:
         - name: gitlab-secret
 

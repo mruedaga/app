@@ -11,7 +11,7 @@ import mn.easyfeedback.core.usecases.EditUseCase
 import javax.inject.Inject
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Controller("/edit")
+@Controller("/api/edit")
 class EditController {
 
     @Inject

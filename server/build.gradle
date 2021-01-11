@@ -55,6 +55,12 @@ jib {
     }
 }
 
+task cleanDev(type: Delete, dependsOn:['processResources']){
+    group = 'build'
+    description = 'Clean dev files'
+    delete "${project.buildDir}/resources/main/application-dev.yml"
+}
+
 task copyClientResources(dependsOn: ':client:build') {
     group = 'build'
     description = 'Copy client resources into server'
@@ -66,7 +72,7 @@ copyClientResources.doFirst {
     }
 }
 
-task assembleServerAndClient(dependsOn: ['copyClientResources', 'shadowJar']) {
+task assembleServerAndClient(dependsOn: ['copyClientResources', 'cleanDev', 'shadowJar']) {
     group = 'build'
     description = 'Build combined server & client JAR'
 }

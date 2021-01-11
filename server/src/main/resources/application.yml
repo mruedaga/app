@@ -27,6 +27,7 @@ micronaut:
     authentication: cookie
     oauth2:
       enabled: true
+      login-uri: /api/oauth/login{/provider}
       clients:
         google:
           client-secret: ''
@@ -34,8 +35,7 @@ micronaut:
           openid:
             issuer: https://accounts.google.com
     redirect:
-      login-success: /user/afterlogin
-      after-login-success: http://localhost:8080/edit
+      login-success: /edit
     token:
       jwt:
         cookie:
