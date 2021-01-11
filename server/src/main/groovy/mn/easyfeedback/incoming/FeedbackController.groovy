@@ -14,7 +14,7 @@ import mn.easyfeedback.core.usecases.FindUseCase
 import javax.inject.Inject
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Controller("/feedback")
+@Controller("/api/feedback")
 class FeedbackController {
 
     @Inject

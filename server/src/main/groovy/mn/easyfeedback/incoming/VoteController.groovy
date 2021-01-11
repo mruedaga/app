@@ -10,7 +10,7 @@ import mn.easyfeedback.core.usecases.CommandUseCase
 
 import javax.inject.Inject
 
-@Controller("/vote")
+@Controller("/api/vote")
 @Secured(SecurityRule.IS_ANONYMOUS)
 class VoteController {
 

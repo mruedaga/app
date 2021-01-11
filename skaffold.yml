@@ -4,9 +4,15 @@ build:
   tagPolicy:
     gitCommit: {}       # use git commit policy
   artifacts:
-    - image: registry.gitlab.com/easy-feedback/mn-easyfeedback
+    - image: jagedn/easy-feedback
       context: .
+      docker:
+        dockerfile: server/Dockerfile
       sync:
         manual:
           - src: 'src/**'
             dest: .
+deploy:
+  kubectl:
+    manifests:
+      - server/k8s/*.yaml

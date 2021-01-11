@@ -14,26 +14,12 @@ import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.rules.SecurityRule
 
 @Secured(SecurityRule.IS_AUTHENTICATED)
-@Controller("/user")
+@Controller("/api/user")
 class UserController {
 
     @Get
     String userDetails(Authentication authentication){
         authentication.attributes['name']
     }
-
-    @Value('${micronaut.security.redirect.after-login-success}')
-    String afterLogin = ""
-
-
-    @Get("afterlogin")
-    MutableHttpResponse<String> fromLogin(@CookieValue("JWT") String jwt){
-        Cookie cookie = CookieFactory.INSTANCE.create("JWT",jwt)
-        cookie.sameSite(SameSite.None)
-        cookie.secure(true)
-        cookie.maxAge(60*5)
-        cookie.path('/')
-        HttpResponse.temporaryRedirect( afterLogin.toURI()).cookie(cookie)
-    }
-
+    
 }
