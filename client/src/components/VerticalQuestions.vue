@@ -31,7 +31,7 @@ export default {
   props: ['chapado'],
   data: function () {
     return {
-      bgVariants: ["info", "warning", "primary", "secondary"],
+      bgVariants: ["info", "info", "info", "info"],
       txtVariants: ["white", "white", "white", "white"]
     }
   },

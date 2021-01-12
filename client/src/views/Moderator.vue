@@ -30,30 +30,24 @@ export default {
   methods: {
     async startTimer() {
       await this.$store.state.apiService.startEasyFeedback(this.$store.state.currentPoll.id);
-      this.interval = setInterval(() => {
-        this.updatePoll();
-      }, 1000)
-      this.updatePoll();
     },
     async stopTimer() {
       await this.$store.state.apiService.stopEasyFeedback(this.$store.state.currentPoll.id);
-      this.interval.stopTimer()
     },
     async resetCounter() {
       await this.$store.state.apiService.resetEasyFeedback(this.$store.state.currentPoll.id);
-      await this.updatePoll();
     },
-    async updatePoll() {
-      let uuid = this.$store.state.currentPoll.id;
-      let response = await this.$store.state.apiService.getEasyFeedback(uuid);
-      await this.$store.commit('updateModel', response.data);
-    }
   },
   mounted() {
     if (!this.$store.state.currentPoll.id) {
       this.$router.push('/')
       return
     }
+    let uuid = this.$store.state.currentPoll.id;
+    let me = this;
+    this.$store.state.apiService.watchEasyFeedback(uuid, function(data){
+        me.$store.commit('updateModel', data);
+    });
   }
 }
 </script>

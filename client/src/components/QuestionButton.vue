@@ -1,5 +1,6 @@
 <template>
-  <b-card border-variant="primary" class="text-center"  :body-bg-variant="bgVariant" :body-text-variant="txtVariant">
+  <b-card @click="vote()"
+          border-variant="primary" class="text-center"  :body-bg-variant="bgVariant" :body-text-variant="txtVariant">
     <b-card-body>
       <b-card-text>
         <div class="question">
@@ -20,8 +21,7 @@
     </b-card-body>
     <b-card-footer>
       <b-button class="mb-2" size="lg" variant="primary">
-        <b-icon-person-circle
-            @click="vote()"></b-icon-person-circle>
+        <b-icon-check-circle></b-icon-person-circle>
       </b-button>
     </b-card-footer>
   </b-card>
