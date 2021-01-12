@@ -35,4 +35,11 @@ export default class APIService {
         })
     }
 
+    watchEasyFeedback(uuid, callable){
+        let es = new EventSource(`${this.axios.defaults.baseURL}vote/${uuid}`);
+        es.addEventListener('message', event => {
+            let data = JSON.parse(event.data);
+            callable(data);
+        }, false);
+    }
 }
