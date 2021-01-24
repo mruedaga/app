@@ -28,7 +28,7 @@ Vue.component('qr-code', VueQRCodeComponent)
 
 
 const emptyModel = {
-    title: "The title",
+    title: "Would you repeat this conference?",
     questions: [
         {
             id:0,
