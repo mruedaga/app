@@ -1,40 +1,23 @@
 <template>
-  <b-container fluid>
-      <b-row>
-        <b-col>
-          <h1>{{ currentPoll.title }}</h1>
+  <div>
+    <div class="position-relative p-4 bg-secondary">
+      <p class="text-light font-weight-bold">
+        Please choose an answer
+      </p>
+      <b-card :title=currentPoll.title >
+        <b-col v-for="(item,index) in currentPoll.questions" :key="item.question"  sm="10" >
+          <label>{{index+1}}. </label>
+          <b-button class ="m-3" style="width: 300px;" variant="outline-primary" @click="vote(index)" size="lg" pill>
+            {{ item.question }}
+          </b-button>
         </b-col>
-      </b-row>
-      <b-row>
-        <b-col  @click="vote(index)" v-for="(item,index) in currentPoll.questions" :key="item.question" lg="3" md="12" sm="12" xl="3">
-          <b-card border-variant="primary" class="text-center">
-            <b-card-body :body-bg-variant="bgVariants[index]" :body-text-variant="txtVariants[index]">
-              <b-card-text>
-                <div class="question">
-                  <svg
-                      height="100%"
-                      preserveAspectRatio="xMinYMin meet"
-                      width="100%"
-                  >
-                    <foreignObject height="100%" width="100%">
-                      <div xmlns="http://www.w3.org/1999/xhtml">
-                        <p>{{ item.question }}</p>
-                      </div>
-                    </foreignObject>
-                  </svg>
-                </div>
-              </b-card-text>
-              <b-card-text><p class="vote">{{ item.votes }}</p></b-card-text>
-            </b-card-body>
-            <b-card-footer>
-              <b-button v-if="!voto" class="mb-2" size="lg" variant="primary" :disabled="chapado">
-                <b-icon-check-circle/>
-              </b-button>
-            </b-card-footer>
-          </b-card>
-        </b-col>
-      </b-row>
-  </b-container>
+        <b-progress class="mt-2" :max="100" height="2rem" show-value>
+          <b-progress-bar :value="75" variant="success"></b-progress-bar>
+          <b-progress-bar :value="25" variant="warning"></b-progress-bar>
+        </b-progress>
+      </b-card>
+    </div>
+  </div>
 </template>
 
 <script>
