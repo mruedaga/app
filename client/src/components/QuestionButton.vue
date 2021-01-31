@@ -11,7 +11,7 @@
           >
             <foreignObject height="100%" width="100%">
               <div xmlns="http://www.w3.org/1999/xhtml">
-                <p> {{ item.question }}</p>
+                <p>  asdasdas {{ item.question }}</p>
               </div>
             </foreignObject>
           </svg>

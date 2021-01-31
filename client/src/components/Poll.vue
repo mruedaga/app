@@ -11,11 +11,7 @@
             {{ item.question }}
           </b-button>
         </b-col>
-        <b-progress class="mt-2" :max="100" height="2rem" show-value>
-          <b-progress-bar :value="75" variant="success"></b-progress-bar>
-          <b-progress-bar :value="25" variant="warning"></b-progress-bar>
-        </b-progress>
-      </b-card>
+       </b-card>
     </div>
   </div>
 </template>
