@@ -6,19 +6,14 @@
           <h1>{{ currentPoll.title }}</h1>
         </b-col>
       </b-row>
-      <b-row v-for="(item,index) in currentPoll.questions" :key="item.question">
-        <b-col lg="12" md="12" sm="12" xl="12">
-          <b-card border-variant="primary" class="text-center">
-            <b-card-body :body-bg-variant="bgVariants[index]" :body-text-variant="txtVariants[index]">
-              <b-card-text class="question">
-                <h1>{{item.question}} ̣
-                  <b-badge variant="light">{{item.votes}}</b-badge>
-                </h1>
-              </b-card-text>
-            </b-card-body>
-          </b-card>
-        </b-col>
-      </b-row>
+
+      <div>
+        <b-table striped hover :items="currentPoll.questions"></b-table>
+      </div>
+      <b-progress class="mt-2" :max="100" height="2rem" show-value>
+        <b-progress-bar :value="75" variant="success"></b-progress-bar>
+        <b-progress-bar :value="25" variant="warning"></b-progress-bar>
+      </b-progress>
     </b-form>
   </b-container>
 </template>

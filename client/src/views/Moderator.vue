@@ -1,7 +1,7 @@
-<template>
-  <div class="edit">
+<template #footer>
+  <div class="edit" >
     <b-container fluid>
-      <b-row>
+      <b-row  footer-tag="footer">
         <b-col lg="2" md="12" sm="12" xl="2">
           <timer-control v-on:startTimer="startTimer" v-on:stopTimer="stopTimer" v-on:resetCounter="resetCounter"></timer-control>
         </b-col>
