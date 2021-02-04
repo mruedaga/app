@@ -1,44 +1,64 @@
 <template>
-  <b-container>
-    <b-row class="justify-content-md-center">
-      <b-col>
-        <b-form inline fluid>
-            <b-form-input
-                id="input-title"
-                v-model="poll.title"
-                placeholder="Title"
-                required
-                type="text"
-                size="lg"
-            ></b-form-input>
+  <b-container fluid>
+    <b-row class="mb-10">
+      <b-col sm="4" >
+        <b-form  @submit.stop.prevent>
+          <b-input-group-append>
+            <b-form-group
+                id="input-group-1"
+                label="Question:"
+                label-for="input-1"
+                description="Please fill th question you want to make">
+
+              <b-form-input
+                  id="input-title"
+                  v-model="poll.title"
+                  placeholder="Question"
+                  required
+                  type="text"
+                  style="width:500px"
+                  :state="titleSizeLimit"
+              ></b-form-input>
+              <b-form-invalid-feedback id="input-live-feedback">
+                The question must be less than 50 characters
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+          </b-input-group-append>
+          <b-button variant="primary" @click="addMore"><b-icon-plus-circle/> New answer</b-button>
         </b-form>
       </b-col>
-    </b-row>
-    <b-row>
-      <b-col md="3" sm="12" v-for="index in 4" :key="index">
-        <b-card>
-          <b-card-title class="d-flex justify-content-center">Q{{index}}</b-card-title>
-          <b-card-body>
-            <b-form-input v-if="poll.questions.length>index-1"
-                          :id="'question-'+index" size="20"
-                          v-model="poll.questions[index-1].question"
-                          placeholder="Question"
-                          type="text"
-                          max="10"/>
-            <b-form-input v-if="poll.questions.length<index"
-                          disabled
-                          type="text"/>
-          </b-card-body>
-          <b-card-footer>
-            <b-button :disabled="index<3 || (index==3 && poll.questions.length!=2) || (index==4 && poll.questions.length!=3)" @click="addMore">
-              <b-icon-plus-circle/>
+      <b-media-body>
+      <b-col v-for="index in 4" :key="index" sm="10" >
+        <b-col sm="3" v-if="poll.questions.length>index-1">
+          <label >Answer number: {{index}}
+            <b-button
+                variant="light"
+                @click="removeQuestion(index-1)"
+                v-if= "index > 2">
+
+              <b-icon-trash/>
             </b-button>
-            <b-button :disabled="index<3 || (index==3 && poll.questions.length!=3) || (index==4 && poll.questions.length!=4)" @click="removeQuestion(index-1)">
-              <b-icon-x-circle-fill/>
-            </b-button>
-          </b-card-footer>
-        </b-card>
+          </label>
+        </b-col>
+        <b-col sm="5">
+          <b-form-group>
+            <b-form-input
+                v-if="poll.questions.length>index-1"
+                placeholder="Question"
+                label-for="input-formatter"
+                class="mb-3"
+                size="sm"
+                v-model="poll.questions[index-1].question"
+                rows="2">
+            </b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              The answer must be less than 20 characters
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-col>
       </b-col>
+      </b-media-body>
     </b-row>
 
   </b-container>
@@ -54,6 +74,14 @@ export default {
     },
     removeQuestion(idx) {
       this.$store.commit('removeQuestion', idx)
+    }
+  },
+  computed: {
+    titleSizeLimit() {
+      return this.poll.title.length > 4 && this.poll.title.length < 51
+    },
+    answerSizeLimit(index) {
+      return this.poll.questions[index-1].question.length > 1 && this.poll.questions[index-1].question.length < 21
     }
   }
 }
