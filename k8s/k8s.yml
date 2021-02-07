@@ -12,13 +12,22 @@ spec:
       labels:
         app: app
     spec:
+      volumes:
+        - name: google-key
+          secret:
+            secretName: google-key
       containers:
-        - image: jagedn/easy-feedback
+        - image: "registry.cloud.okteto.net/easy-feedback/app:latest"
           name: app
           ports:
             - name: http
               containerPort: 8080
+          volumeMounts:
+            - name: google-key
+              mountPath: /var/secrets/google
           env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/client_secret.json
             - name: MICRONAUT_SECURITY_OAUTH2_CLIENTS_GOOGLE_CLIENT_SECRET
               valueFrom:
                 configMapKeyRef:
@@ -29,8 +38,16 @@ spec:
                 configMapKeyRef:
                   name: google
                   key: google_client_id
-      imagePullSecrets:
-        - name: gitlab-secret
+            - name: EASYFEEDBACK_PATH
+              value: /easy-feedback/storage
+          volumeMounts:
+            - mountPath: /easy-feedback/storage
+              name: storage
+
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: 'storage'
 
 ---
 

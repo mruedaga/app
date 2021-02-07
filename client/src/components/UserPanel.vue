@@ -1,8 +1,11 @@
 <template>
   <b-jumbotron>
-    <template #header>Creación/Edición Feedback</template>
+    <template #header>Welcome</template>
     <b-container fluid v-if="$store.state.user.name">
-        <h5><b-avatar variant="dark"></b-avatar> {{$store.state.user.name}} </h5>
+      <h5>
+        <b-avatar variant="dark"></b-avatar>
+        {{$store.state.user.name}}
+      </h5>
     </b-container>
   </b-jumbotron>
 </template>

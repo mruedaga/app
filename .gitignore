@@ -19,3 +19,4 @@ build
 **/node_modules
 .idea
 /server/src/main/resources/application-dev.yml
+okteto/*

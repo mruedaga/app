@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <b-jumbotron >
+    <b-jumbotron>
       <template slot="header">
         <b-container>Easy-Feedback</b-container>
       </template>
@@ -21,7 +21,8 @@
         <b-col sm="12" lg="3" md="3" xl="3">
           <b-card title="Let's vote" tag="article">
             <b-card-text>
-              <p>Start the poll, share the personalized url with your users and see in realtime what your users think about your question</p>
+              <p>Start the poll, share the personalized url with your users and see in realtime what your users think
+                about your question</p>
             </b-card-text>
           </b-card>
         </b-col>

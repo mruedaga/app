@@ -2,6 +2,7 @@ package mn.easyfeedback.outgoing.file
 
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
+import io.micronaut.context.annotation.Value
 import mn.easyfeedback.core.model.EasyFeedback
 import mn.easyfeedback.outgoing.EasyFeedbackStorage
 
@@ -13,7 +14,8 @@ import javax.inject.Singleton
 @Named("easyFeedbackStorage")
 class EasyFeedbackFileStorage implements EasyFeedbackStorage {
 
-    static String PATH="build"
+    @Value('${easyfeedback.path:build}')
+    String PATH
 
     @PostConstruct
     void init(){

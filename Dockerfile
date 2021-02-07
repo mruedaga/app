@@ -1,8 +1,8 @@
 # Stage 1: Build the JAR
-FROM gradle:6.7.1-jdk11 as gradle
+FROM gradle:6.7.1-jdk11 AS gradle
 COPY --chown=gradle . /home/app
 WORKDIR /home/app
-RUN ./gradlew server:assembleServerAndClient --no-daemon
+RUN  ./gradlew server:assembleServerAndClient --no-daemon
 
 FROM adoptopenjdk/openjdk13-openj9:jdk-13.0.2_8_openj9-0.18.0-alpine-slim
 COPY --from=gradle /home/app/server/build/libs/*-all.jar theApp.jar

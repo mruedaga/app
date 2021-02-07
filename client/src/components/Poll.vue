@@ -1,17 +1,22 @@
 <template>
   <div>
-    <div class="position-relative p-4 bg-secondary">
+    <div class="position-relative p-4 bg-secondary" v-if="voto">
+      <p class="text-light font-weight-bold">
+        Thanks
+      </p>
+    </div>
+    <div class="position-relative p-4 bg-secondary" v-if="!voto">
       <p class="text-light font-weight-bold">
         Please choose an answer
       </p>
-      <b-card :title=currentPoll.title >
-        <b-col v-for="(item,index) in currentPoll.questions" :key="item.question"  sm="10" >
+      <b-card :title=currentPoll.title>
+        <b-col v-for="(item,index) in currentPoll.questions" :key="item.question" sm="10">
           <label>{{index+1}}. </label>
-          <b-button class ="m-3" style="width: 300px;" variant="outline-primary" @click="vote(index)" size="lg" pill>
+          <b-button class="m-3" style="width: 300px;" variant="outline-primary" @click="vote(index)" size="lg" pill>
             {{ item.question }}
           </b-button>
         </b-col>
-       </b-card>
+      </b-card>
     </div>
   </div>
 </template>
@@ -21,10 +26,9 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'Poll',
-  props: ['chapado'],
-  data: function () {
+  props: ['voto'],
+  data() {
     return {
-      voto: false,
       bgVariants: ["info", "info", "info", "info"],
       txtVariants: ["white", "white", "white", "white"]
     }
@@ -36,7 +40,7 @@ export default {
   },
   methods: {
     vote: function (idx) {
-      this.$data.voto=true
+      this.$data.voto = true
       this.$emit('voteOption', idx)
     }
   }
