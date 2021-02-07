@@ -1,6 +1,6 @@
 on: [push]
 
-name: k8s
+name: okteto
 
 jobs:
 
@@ -15,7 +15,5 @@ jobs:
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
-      - name: "Build"
-        uses: okteto/build@master
-        with:
-          tag: registry.cloud.okteto.net/easy-feedback/app:${{ github.sha }}
+      - name: "Push changes"
+        uses: okteto/push@master
