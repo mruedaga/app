@@ -24,7 +24,7 @@ jobs:
         uses: okteto/apply@master
         with:
           namespace: easy-feedback
-          manifest: k8s/k8s.yaml
+          manifest: k8s/k8s.yml
 
       - name: "Push changes"
         uses: okteto/push@master
