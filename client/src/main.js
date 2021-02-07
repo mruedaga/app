@@ -31,14 +31,14 @@ const emptyModel = {
     title: "Would you repeat this conference?",
     questions: [
         {
-            id:0,
-            question:"Yes",
-            votes:0
+            id: 0,
+            question: "Yes",
+            votes: 0
         },
         {
-            id:1,
-            question:"No",
-            votes:0
+            id: 1,
+            question: "No",
+            votes: 0
         },
     ]
 }
@@ -47,16 +47,16 @@ const http = axios.create({
     withCredentials: true,
     baseURL: process.env.VUE_APP_API_URL
 })
-http.interceptors.request.use( function (config){
+http.interceptors.request.use(function (config) {
     return config;
-}, function(err){
+}, function (err) {
     return Promise.reject(err)
 })
-http.interceptors.response.use( function (response){
+http.interceptors.response.use(function (response) {
     return response;
-}, function(err){
-    if( err.response.status == 401 || err.response.status == 403){
-        router.push( 'login')
+}, function (err) {
+    if (err.response.status == 401 || err.response.status == 403) {
+        router.push('login')
     }
     return Promise.reject(err)
 })
@@ -67,9 +67,9 @@ const store = new Vuex.Store({
     state: {
         apiService: apiService,
         currentPoll: emptyModel,
-        user:{
+        user: {
             name: '',
-            email:''
+            email: ''
         }
     },
     mutations: {
@@ -91,26 +91,26 @@ const store = new Vuex.Store({
         updateModel(state, data) {
             state.currentPoll = data
         },
-        addQuestion(state){
+        addQuestion(state) {
             state.currentPoll.questions.push({
                 id: state.currentPoll.questions.length,
-                question:"Your Question",
-                votes:0
+                question: "Your Question",
+                votes: 0
             })
         },
-        removeQuestion(state, idx){
-            state.currentPoll.questions.splice(idx,1)
+        removeQuestion(state, idx) {
+            state.currentPoll.questions.splice(idx, 1)
         },
-        newUser(state, user){
+        newUser(state, user) {
             state.user.name = user
         }
     },
-    actions:{
-        async fetchUser(context){
+    actions: {
+        async fetchUser(context) {
             try {
                 const user = await context.state.apiService.loadUser()
                 context.commit('newUser', user.data)
-            }catch(e){
+            } catch (e) {
                 //router.push('Home')
             }
         }

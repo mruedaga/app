@@ -1,9 +1,10 @@
 <template #footer>
-  <div class="edit" >
+  <div class="edit">
     <b-container fluid>
-      <b-row  footer-tag="footer">
+      <b-row footer-tag="footer">
         <b-col lg="2" md="12" sm="12" xl="2">
-          <timer-control v-on:startTimer="startTimer" v-on:stopTimer="stopTimer" v-on:resetCounter="resetCounter"></timer-control>
+          <timer-control v-on:startTimer="startTimer" v-on:stopTimer="stopTimer"
+                         v-on:resetCounter="resetCounter"></timer-control>
         </b-col>
         <b-col lg="6" md="12" sm="12" xl="6">
           <vertical-questions/>
@@ -45,10 +46,9 @@ export default {
     }
     let uuid = this.$store.state.currentPoll.id;
     let me = this;
-    this.$store.state.apiService.watchEasyFeedback(uuid, function(data){
-        me.$store.commit('updateModel', data);
+    this.$store.state.apiService.watchEasyFeedback(uuid, function (data) {
+      me.$store.commit('updateModel', data);
     });
   }
 }
 </script>
-

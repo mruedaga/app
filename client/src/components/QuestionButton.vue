@@ -1,6 +1,6 @@
 <template>
   <b-card @click="vote()"
-          border-variant="primary" class="text-center"  :body-bg-variant="bgVariant" :body-text-variant="txtVariant">
+          border-variant="primary" class="text-center" :body-bg-variant="bgVariant" :body-text-variant="txtVariant">
     <b-card-body>
       <b-card-text>
         <div class="question">
@@ -11,7 +11,7 @@
           >
             <foreignObject height="100%" width="100%">
               <div xmlns="http://www.w3.org/1999/xhtml">
-                <p>  asdasdas {{ item.question }}</p>
+                <p> asdasdas {{ item.question }}</p>
               </div>
             </foreignObject>
           </svg>
@@ -44,13 +44,12 @@ export default {
 </script>
 
 <style>
-.question
-{
-resize: both;
-margin: 0;
-padding: 0;
-height: 100 %;
-width: 100 %;
-overflow: visible;
+.question {
+  resize: both;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
 }
 </style>

@@ -40,3 +40,7 @@ micronaut:
       jwt:
         cookie:
           cookie-same-site: none
+
+---
+easyfeedback:
+  path: build

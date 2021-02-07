@@ -4,7 +4,7 @@ export default class APIService {
         this.axios = axios
     }
 
-    loadUser(){
+    loadUser() {
         return this.axios.get(`user`)
     }
 
@@ -30,12 +30,12 @@ export default class APIService {
 
     voteEasyFeedback(uuid, question) {
         return this.axios.post(`vote`, {
-            id:uuid,
-            question:question
+            id: uuid,
+            question: question
         })
     }
 
-    watchEasyFeedback(uuid, callable){
+    watchEasyFeedback(uuid, callable) {
         let es = new EventSource(`${this.axios.defaults.baseURL}vote/${uuid}`);
         es.addEventListener('message', event => {
             let data = JSON.parse(event.data);

@@ -51,7 +51,11 @@ compileGroovy.groovyOptions.configurationScript = file('../gradle/config/groovyc
 
 jib {
     to {
-        image = "registry.gitlab.com/easy-feedback/mn-easyfeedback"
+        image = "registry.cloud.okteto.net/easy-feedback/app"
+        auth{
+            username project.findProperty("DOCKER_USERNAME")
+            password project.findProperty("DOCKER_PASSWORD")
+        }
     }
 }
 

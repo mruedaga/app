@@ -7,27 +7,41 @@
         </b-col>
       </b-row>
 
-      <div>
+      <b-row>
         <b-table striped hover :items="currentPoll.questions"></b-table>
-      </div>
-      <b-progress class="mt-2" :max="100" height="2rem" show-value>
-        <b-progress-bar :value="75" variant="success"></b-progress-bar>
-        <b-progress-bar :value="25" variant="warning"></b-progress-bar>
-      </b-progress>
+      </b-row>
+
+      <b-row>
+        <AnswersBarchart :chart-data="chartData" :options="chartOptions"></AnswersBarchart>
+      </b-row>
     </b-form>
   </b-container>
 </template>
 
 <script>
 import {mapState} from 'vuex';
+import AnswersBarchart from '../components/AnswersBarchart.vue'
 
 export default {
   name: 'VerticalQuestions',
   props: ['chapado'],
-  data: function () {
+  components: {
+    AnswersBarchart
+  },
+  data() {
     return {
       bgVariants: ["info", "info", "info", "info"],
-      txtVariants: ["white", "white", "white", "white"]
+      txtVariants: ["white", "white", "white", "white"],
+      chartData: {},
+      chartOptions: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
     }
   },
   computed: {
@@ -35,9 +49,31 @@ export default {
       'currentPoll'
     ])
   },
-  methods: {
-    vote: function (idx) {
-      this.$emit('voteOption', idx)
+  watch: {
+    currentPoll(newValue) {
+      let labels = newValue.questions.map(x => x.question);
+      let data = newValue.questions.map(x => x.votes);
+      console.log(labels)
+      this.chartData = {
+        labels: labels,
+        datasets: [{
+          label: '# of Votes',
+          data: data,
+          borderWidth: 1,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ]
+        }],
+      }
     }
   }
 }

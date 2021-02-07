@@ -2,7 +2,9 @@
   <div>
     <b-container fluid>
       <b-row>
-        <b-col><user-panel></user-panel></b-col>
+        <b-col>
+          <user-panel></user-panel>
+        </b-col>
       </b-row>
       <b-row>
         <b-col>
