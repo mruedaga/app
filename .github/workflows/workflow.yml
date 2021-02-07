@@ -17,3 +17,6 @@ jobs:
 
       - name: "Push changes"
         uses: okteto/push@master
+        with:
+          namespace: easy-feedback
+          name: app
