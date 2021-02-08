@@ -20,33 +20,36 @@ jobs:
 
   devflow:
     runs-on: ubuntu-latest
+    env:
+      okteto: ${{secrets.OKTETO_TOKEN}}
+
     steps:
       - name: checkout
         uses: actions/checkout@master
-        if: ${{ secrets.OKTETO_TOKEN }}
+        if: ${{ env.okteto }}
 
       - name: "Login"
         uses: okteto/login@master
-        if: ${{ secrets.OKTETO_TOKEN }}
+        if: ${{ env.okteto }}
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: "Activate Namespace"
         uses: okteto/namespace@master
-        if: ${{ secrets.OKTETO_TOKEN }}
+        if: ${{ env.okteto }}
         with:
           name: easy-feedback
 
       - name: "Deploy application"
         uses: okteto/apply@master
-        if: ${{ secrets.OKTETO_TOKEN }}
+        if: ${{ env.okteto }}
         with:
           namespace: easy-feedback
           manifest: k8s/k8s.yml
 
       - name: "Push changes"
         uses: okteto/push@master
-        if: ${{ secrets.OKTETO_TOKEN }}
+        if: ${{ env.okteto }}
         with:
           namespace: easy-feedback
           name: app
