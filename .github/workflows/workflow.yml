@@ -1,4 +1,18 @@
-on: [push]
+on:
+  push:
+    branches:
+      - master
+
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 7 * * 1-5'
+
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Mensaje'
+        required: false
+        default: 'deploy'
 
 name: okteto
 
@@ -9,25 +23,30 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@master
+        if: ${{ secrets.OKTETO_TOKEN }}
 
       - name: "Login"
         uses: okteto/login@master
+        if: ${{ secrets.OKTETO_TOKEN }}
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: "Activate Namespace"
         uses: okteto/namespace@master
+        if: ${{ secrets.OKTETO_TOKEN }}
         with:
           name: easy-feedback
 
       - name: "Deploy application"
         uses: okteto/apply@master
+        if: ${{ secrets.OKTETO_TOKEN }}
         with:
           namespace: easy-feedback
           manifest: k8s/k8s.yml
 
       - name: "Push changes"
         uses: okteto/push@master
+        if: ${{ secrets.OKTETO_TOKEN }}
         with:
           namespace: easy-feedback
           name: app
