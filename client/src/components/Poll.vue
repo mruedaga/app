@@ -20,9 +20,6 @@
         </b-alert>
       </p>
     </div>
-    <b-row>
-        <AnswersBarchart :chart-data="chartData" :options="chartOptions"></AnswersBarchart>
-    </b-row>
     <div class="position-relative p-4 bg-secondary" v-if="!voto">
       <p class="text-light font-weight-bold">
         Please choose an answer
