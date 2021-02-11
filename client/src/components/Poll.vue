@@ -1,10 +1,28 @@
 <template>
   <div>
     <div class="position-relative p-4 bg-secondary" v-if="voto">
-      <p class="text-light font-weight-bold">
-        Thanks
+      <p class="text-light" v-if="currentPoll.state== 'STARTED'" >
+        <b-alert show variant="success">
+          <h4 class="alert-heading">Thanks for participating!</h4>
+          <p>
+            Currently the poll is still <b>OPEN</b>, please wait a few minutes for all members to give us feedback.
+          </p>
+          <hr>
+        </b-alert>
+      </p>
+      <p class="text-light" v-if="currentPoll.state != 'STARTED'" >
+        <b-alert show variant="warning">
+          <h4 class="alert-heading">Thanks for participating!</h4>
+          <p>
+            Currently the poll is <b>CLOSED</b>, thanks for sharing your opinion.
+          </p>
+          <hr>
+        </b-alert>
       </p>
     </div>
+    <b-row>
+        <AnswersBarchart :chart-data="chartData" :options="chartOptions"></AnswersBarchart>
+    </b-row>
     <div class="position-relative p-4 bg-secondary" v-if="!voto">
       <p class="text-light font-weight-bold">
         Please choose an answer
